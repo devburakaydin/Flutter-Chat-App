@@ -65,4 +65,17 @@ class UserModel with ChangeNotifier {
       state = ViewState.Idle;
     }
   }
+
+  Future<Kullanici> signInWithGoogle() async {
+    try {
+      state = ViewState.Busy;
+      _kullanici = await _userRepository.signInWithGoogle();
+      return _kullanici;
+    } catch (e) {
+      debugPrint("hata signInWithGoogle : " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
 }

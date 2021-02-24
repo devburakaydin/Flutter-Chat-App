@@ -1,15 +1,21 @@
-import 'package:chat_app/commen_widget/social_log_in_button.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_button/sign_button.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final _userModel = Provider.of<UserModel>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
+          //renk gecişi
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -22,6 +28,7 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
+          //renk topu
           Positioned(
             bottom: -130,
             child: ClipOval(
@@ -32,8 +39,9 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
+          //form
           Container(
-            color: Colors.transparent,
+            //color: Colors.transparent,
             padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,13 +52,22 @@ class SignInPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                 ),
-                SocialLogInButton(
-                  butonText: 'Google ile Oturum Aç',
-                  onPressed: () async {
-                    await _userModel.singInAnonymously();
-                  },
-                ),
               ],
+            ),
+          ),
+          //google button
+          Positioned(
+            bottom: 30,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: SignInButton.mini(
+                buttonType: ButtonType.google,
+                buttonSize: ButtonSize.large,
+                onPressed: () {
+                  _userModel.signInWithGoogle();
+                },
+
+              ),
             ),
           ),
         ],

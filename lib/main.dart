@@ -1,4 +1,4 @@
-import 'package:chat_app/landing_page.dart';
+import 'file:///C:/Users/Burak/AndroidStudioProjects/chat_app/lib/app/landing_page.dart';
 import 'package:chat_app/locator.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';

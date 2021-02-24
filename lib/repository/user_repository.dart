@@ -16,4 +16,8 @@ class UserRepository {
   Future<Kullanici> singInAnonymously() async {
     return await _firebaseAuthService.singInAnonymously();
   }
+
+  Future<Kullanici> signInWithGoogle() async {
+    return await _firebaseAuthService.signInWithGoogle();
+  }
 }
