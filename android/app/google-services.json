@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "520406678723",
+    "project_id": "limonchat-991f0",
+    "storage_bucket": "limonchat-991f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520406678723:android:364aef4fa4cd92f80b7676",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520406678723-06vlm3utgvrnj8mcl2dgrf7bkkklvf5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app",
+            "certificate_hash": "c31c25b81af1825cb4dd0e6b254d8f8aa3a0d999"
+          }
+        },
+        {
+          "client_id": "520406678723-b40g7ar4qba95odhq757tqtbou4f3e8t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiwGg0kKPZOIA2iBnXD67JDUCMykSX9JU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520406678723-b40g7ar4qba95odhq757tqtbou4f3e8t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
