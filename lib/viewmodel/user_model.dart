@@ -40,9 +40,8 @@ class UserModel with ChangeNotifier {
     try {
       state = ViewState.Busy;
       bool sonuc = await _userRepository.signOut();
-      if (sonuc == true) {
-        _kullanici = null;
-      }
+       _kullanici = null;
+
 
       return sonuc;
     } catch (e) {
@@ -73,6 +72,36 @@ class UserModel with ChangeNotifier {
       return _kullanici;
     } catch (e) {
       debugPrint("hata signInWithGoogle : " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  Future<Kullanici> signInWithEmailAndPassword(
+      String email, String sifre) async {
+    try {
+      state = ViewState.Busy;
+      _kullanici =
+          await _userRepository.signInWithEmailAndPassword(email, sifre);
+      return _kullanici;
+    } catch (e) {
+      debugPrint("hata signInWithEmailAndPassword : " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  Future<Kullanici> createUserWithEmailAndPassword(
+      String email, String sifre) async {
+    try {
+      state = ViewState.Busy;
+      _kullanici =
+          await _userRepository.createUserWithEmailAndPassword(email, sifre);
+      return _kullanici;
+    } catch (e) {
+      debugPrint("hata createUserWithEmailAndPassword : " + e.toString());
       return null;
     } finally {
       state = ViewState.Idle;
