@@ -1,8 +1,10 @@
-import 'file:///C:/Users/Burak/AndroidStudioProjects/chat_app/lib/app/landing_page.dart';
+import 'package:chat_app/app/landing_page.dart';
+import 'package:chat_app/deneme.dart';
 import 'package:chat_app/locator.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -20,6 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return ChangeNotifierProvider(
       create: (context) => UserModel(),
       child: MaterialApp(
@@ -29,6 +32,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.yellow,
         ),
         home: LandingPage(),
+        //home: Deneme(),
       ),
     );
   }

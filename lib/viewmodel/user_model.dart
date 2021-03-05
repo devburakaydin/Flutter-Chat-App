@@ -29,7 +29,7 @@ class UserModel with ChangeNotifier {
       _kullanici = await _userRepository.currentUser();
       return _kullanici;
     } catch (e) {
-      debugPrint("hata : " + e.toString());
+      print("current user bulunamadı boş : " + e.toString());
       return null;
     } finally {
       state = ViewState.Idle;
@@ -40,71 +40,56 @@ class UserModel with ChangeNotifier {
     try {
       state = ViewState.Busy;
       bool sonuc = await _userRepository.signOut();
-       _kullanici = null;
-
+      _kullanici = null;
 
       return sonuc;
     } catch (e) {
-      debugPrint("hata : " + e.toString());
+      debugPrint("signOut Hatası : " + e.toString());
       return false;
     } finally {
       state = ViewState.Idle;
     }
   }
 
-  Future<Kullanici> singInAnonymously() async {
-    try {
-      state = ViewState.Busy;
-      _kullanici = await _userRepository.singInAnonymously();
-      return _kullanici;
-    } catch (e) {
-      debugPrint("hata : " + e.toString());
-      return null;
-    } finally {
-      state = ViewState.Idle;
+  Future<bool> emailSearch(String email) async {
+    return await _userRepository.emailSearch(email);
+  }
+
+  Future<bool> userNameSearch(String userName) async {
+    return await _userRepository.userNameSearch(userName);
+  }
+
+  Future<bool> userNameUpdate(String userName, String userID) async {
+    bool sonuc = await _userRepository.userNameUpdate(userName, userID);
+    if (sonuc) {
+      currentUser();
+      return true;
     }
+    return false;
   }
 
   Future<Kullanici> signInWithGoogle() async {
-    try {
-      state = ViewState.Busy;
-      _kullanici = await _userRepository.signInWithGoogle();
-      return _kullanici;
-    } catch (e) {
-      debugPrint("hata signInWithGoogle : " + e.toString());
-      return null;
-    } finally {
+    _kullanici = await _userRepository.signInWithGoogle();
+    if (_kullanici != null) {
       state = ViewState.Idle;
     }
+    return _kullanici;
   }
 
-  Future<Kullanici> signInWithEmailAndPassword(
-      String email, String sifre) async {
-    try {
-      state = ViewState.Busy;
-      _kullanici =
-          await _userRepository.signInWithEmailAndPassword(email, sifre);
-      return _kullanici;
-    } catch (e) {
-      debugPrint("hata signInWithEmailAndPassword : " + e.toString());
-      return null;
-    } finally {
+  Future<Kullanici> signInWithEmailAndPassword(String email, String sifre) async {
+    _kullanici = await _userRepository.signInWithEmailAndPassword(email, sifre);
+    if (_kullanici != null) {
       state = ViewState.Idle;
     }
+
+    return _kullanici;
   }
 
-  Future<Kullanici> createUserWithEmailAndPassword(
-      String email, String sifre) async {
-    try {
-      state = ViewState.Busy;
-      _kullanici =
-          await _userRepository.createUserWithEmailAndPassword(email, sifre);
-      return _kullanici;
-    } catch (e) {
-      debugPrint("hata createUserWithEmailAndPassword : " + e.toString());
-      return null;
-    } finally {
+  Future<Kullanici> createUserWithEmailAndPassword(String email, String sifre) async {
+    _kullanici = await _userRepository.createUserWithEmailAndPassword(email, sifre);
+    if (_kullanici != null) {
       state = ViewState.Idle;
     }
+    return _kullanici;
   }
 }

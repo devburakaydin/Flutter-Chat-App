@@ -9,22 +9,37 @@ class UserRepository {
 
   Future<Kullanici> currentUser() async {
     Kullanici _kullanici = await _firebaseAuthService.currentUser();
-    return await _firebaseDbService.readUser(_kullanici.userID);
+    if (_kullanici != null) {
+      return await _firebaseDbService.readUser(_kullanici.userID);
+    } else {
+      return null;
+    }
   }
 
   Future<bool> signOut() async {
     return await _firebaseAuthService.signOut();
   }
 
-  Future<Kullanici> singInAnonymously() async {
-    return await _firebaseAuthService.singInAnonymously();
+  Future<bool> emailSearch(String email) async {
+    return await _firebaseDbService.emailSearch(email);
+  }
+
+  Future<bool> userNameSearch(String userName) async {
+    return await _firebaseDbService.userNameSearch(userName);
+  }
+
+  Future<bool> userNameUpdate(String userName, String userID) async {
+    return await _firebaseDbService.userNameUpdate(userName, userID);
   }
 
   Future<Kullanici> signInWithGoogle() async {
     Kullanici _kullanici = await _firebaseAuthService.signInWithGoogle();
-    bool sonuc = await _firebaseDbService.saveUser(_kullanici);
-    if (sonuc == true) {
-      return await _firebaseDbService.readUser(_kullanici.userID);
+    if (_kullanici != null) {
+      if (await _firebaseDbService.saveUser(_kullanici)) {
+        return await _firebaseDbService.readUser(_kullanici.userID);
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -32,8 +47,7 @@ class UserRepository {
 
   Future<Kullanici> signInWithEmailAndPassword(String email, String sifre) async {
     Kullanici _kullanici = await _firebaseAuthService.signInWithEmailAndPassword(email, sifre);
-    bool sonuc = await _firebaseDbService.saveUser(_kullanici);
-    if (sonuc == true) {
+    if (_kullanici != null) {
       return await _firebaseDbService.readUser(_kullanici.userID);
     } else {
       return null;
@@ -42,9 +56,13 @@ class UserRepository {
 
   Future<Kullanici> createUserWithEmailAndPassword(String email, String sifre) async {
     Kullanici _kullanici = await _firebaseAuthService.createUserWithEmailAndPassword(email, sifre);
-    bool sonuc = await _firebaseDbService.saveUser(_kullanici);
-    if (sonuc == true) {
-      return await _firebaseDbService.readUser(_kullanici.userID);
+    if (_kullanici != null) {
+      bool sonuc = await _firebaseDbService.saveUser(_kullanici);
+      if (sonuc == true) {
+        return await _firebaseDbService.readUser(_kullanici.userID);
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
