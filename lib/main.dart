@@ -1,5 +1,4 @@
 import 'package:chat_app/app/landing_page.dart';
-import 'package:chat_app/deneme.dart';
 import 'package:chat_app/locator.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';

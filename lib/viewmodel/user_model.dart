@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:chat_app/locator.dart';
 import 'package:chat_app/models/kullanici.dart';
+import 'package:chat_app/models/mesaj.dart';
+import 'package:chat_app/models/sohbet.dart';
 import 'package:chat_app/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +72,11 @@ class UserModel with ChangeNotifier {
     return false;
   }
 
+  Future<List<Kullanici>> getAllUser() async {
+    var tumKullanicilar = await _userRepository.getAllUser();
+    return tumKullanicilar;
+  }
+
   Future<Kullanici> signInWithGoogle() async {
     _kullanici = await _userRepository.signInWithGoogle();
     if (_kullanici != null) {
@@ -91,5 +100,21 @@ class UserModel with ChangeNotifier {
       state = ViewState.Idle;
     }
     return _kullanici;
+  }
+
+  Future<String> uploadFile(String userID, String fileType, File yuklenecekDosya) async {
+    return await _userRepository.uploadFile(userID, fileType, yuklenecekDosya);
+  }
+
+  Stream<List<Mesaj>> getMessages(String currentUserID, String konusulanUserID) {
+    return _userRepository.getMessages(currentUserID, konusulanUserID);
+  }
+
+  Future<bool> saveMessage(Mesaj kaydedilecekMesaj) async {
+    return await _userRepository.saveMessage(kaydedilecekMesaj);
+  }
+
+  Future<List<Sohbet>> getAllSohbetler(String userID) async {
+    return await _userRepository.getAllSohbetler(userID);
   }
 }

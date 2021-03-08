@@ -5,21 +5,26 @@ class Kullanici {
   final String userID;
   String email;
   String userName;
+  String profilURL;
   DateTime createdAt;
   DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Kullanici{userID: $userID, email: $email, userName: $userName, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Kullanici{userID: $userID, email: $email, userName: $userName, profilURL: $profilURL, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 
-  Kullanici({@required this.userID, this.email, this.userName, this.createdAt, this.updatedAt});
+  Kullanici(
+      {@required this.userID, this.email, this.userName, this.profilURL, this.createdAt, this.updatedAt});
+
+  Kullanici.idveResim({@required this.userID, this.profilURL});
 
   Map<String, dynamic> toMap() {
     return {
       'userID': userID,
       'email': email,
       'userName': userName,
+      'profilURL': profilURL,
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
       'updatedAt': updatedAt ?? FieldValue.serverTimestamp(),
     };
@@ -28,6 +33,7 @@ class Kullanici {
   Kullanici.fromMap(Map<String, dynamic> map)
       : userID = map['userID'],
         email = map['email'],
+        profilURL = map['profilURL'],
         createdAt = (map['createdAt'] as Timestamp).toDate(),
         updatedAt = (map['updatedAt'] as Timestamp).toDate(),
         userName = map['userName'];

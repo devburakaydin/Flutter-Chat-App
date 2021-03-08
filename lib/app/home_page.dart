@@ -1,6 +1,7 @@
-import 'package:chat_app/app/kullanicilar.dart';
+import 'package:chat_app/app/kullanicilar_page.dart';
 import 'package:chat_app/app/my_custom_bottom_navi.dart';
-import 'package:chat_app/app/profil.dart';
+import 'package:chat_app/app/profil_page.dart';
+import 'package:chat_app/app/sohbet_page.dart';
 import 'package:chat_app/app/tab_items.dart';
 import 'package:flutter/material.dart';
 
@@ -14,14 +15,14 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.Kullanicilar: GlobalKey<NavigatorState>(),
-    //TabItem.Konusmalarim: GlobalKey<NavigatorState>(),
+    TabItem.Sohbet: GlobalKey<NavigatorState>(),
     TabItem.Profil: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, Widget> tumSayfalar() {
     return {
       TabItem.Kullanicilar: KullanicilarPage(),
-      //TabItem.Konusmalarim: KonusmalarimPage(),
+      TabItem.Sohbet: SohbetPage(),
       TabItem.Profil: ProfilPage(),
     };
   }

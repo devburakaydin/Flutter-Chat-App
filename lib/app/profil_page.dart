@@ -1,9 +1,46 @@
+import 'dart:io';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends StatefulWidget {
+  @override
+  _ProfilPageState createState() => _ProfilPageState();
+}
+
+class _ProfilPageState extends State<ProfilPage> {
+  File _profilFoto;
+
+  void _kameradanFotoCek() async {
+    var pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _profilFoto = File(pickedFile.path);
+        _profilFotoGuncelle(context);
+      } else {
+        print('No image selected.');
+      }
+      Navigator.of(context).pop();
+    });
+  }
+
+  void _galeridenResimSec() async {
+    var pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _profilFoto = File(pickedFile.path);
+        _profilFotoGuncelle(context);
+      } else {
+        print('No image selected.');
+      }
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _userModel = Provider.of<UserModel>(context);
@@ -44,14 +81,14 @@ class ProfilPage extends StatelessWidget {
                                               leading: Icon(Icons.camera),
                                               title: Text("Kameradan Çek"),
                                               onTap: () {
-                                                //_kameradanFotoCek();
+                                                _kameradanFotoCek();
                                               },
                                             ),
                                             ListTile(
                                               leading: Icon(Icons.image),
                                               title: Text("Galeriden Seç"),
                                               onTap: () {
-                                                //_galeridenResimSec();
+                                                _galeridenResimSec();
                                               },
                                             ),
                                           ],
@@ -62,6 +99,8 @@ class ProfilPage extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 75,
                                 backgroundColor: Colors.red,
+                                backgroundImage: _profilFoto == null ? null : FileImage(_profilFoto),
+
                                 /*
                       backgroundImage: _profilFoto == null
                           ? NetworkImage(_userModel.user.profilURL)
@@ -76,7 +115,9 @@ class ProfilPage extends StatelessWidget {
                           child: Text(
                             _userModel.kullanici.userName,
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                                fontSize: _userModel.kullanici.userName.length > 9 ? 15 : 25,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
                           ),
                         ),
                       ],
@@ -133,6 +174,13 @@ class ProfilPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _profilFotoGuncelle(BuildContext context) async {
+    final _userModel = Provider.of<UserModel>(context, listen: false);
+    if (_profilFoto != null) {
+      await _userModel.uploadFile(_userModel.kullanici.userID, "profil_foto", _profilFoto);
+    }
   }
 }
 

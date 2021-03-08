@@ -70,7 +70,7 @@ class _UserNamePageState extends State<UserNamePage> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                maxLength: 20,
+                                maxLength: 15,
                                 keyboardType: TextInputType.emailAddress,
                                 onChanged: (value) {
                                   kontrol(value);
