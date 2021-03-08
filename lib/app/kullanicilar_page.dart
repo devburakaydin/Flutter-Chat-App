@@ -43,7 +43,7 @@ class _KullanicilarPageState extends State<KullanicilarPage> {
                           title: Text(secilenUser.userName),
                           subtitle: Text(secilenUser.email),
                           leading: secilenUser.profilURL == null
-                              ? Icon(Icons.add)
+                              ? CircleAvatar(backgroundImage: AssetImage("assets/images/profil.jpeg"))
                               : CircleAvatar(backgroundImage: NetworkImage(secilenUser.profilURL)),
                         ),
                       );

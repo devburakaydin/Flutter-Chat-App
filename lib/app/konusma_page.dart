@@ -181,13 +181,12 @@ class _KonusmaPageState extends State<KonusmaPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                /*
                 CircleAvatar(
                   backgroundColor: Colors.grey.withAlpha(40),
-                  backgroundImage: NetworkImage(_chatModel.sohbetEdilenUser.profilURL),
+                  backgroundImage: widget.sohbetEdilenUser.profilURL != null
+                      ? NetworkImage(widget.sohbetEdilenUser.profilURL)
+                      : AssetImage("assets/images/profil.jpeg"),
                 ),
-                 */
-
                 Flexible(
                   child: Container(
                     decoration: BoxDecoration(

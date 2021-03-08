@@ -151,4 +151,15 @@ class FirebaseDbService implements DbBase {
     }
     return sohbetler;
   }
+
+  @override
+  Future<DateTime> saatiGoster(String userID) async {
+    await _firestore.collection("server").doc(userID).set({
+      "saat": FieldValue.serverTimestamp(),
+    });
+
+    var okunanMap = await _firestore.collection("server").doc(userID).get();
+    Timestamp okunanTarih = okunanMap.data()["saat"];
+    return okunanTarih.toDate();
+  }
 }

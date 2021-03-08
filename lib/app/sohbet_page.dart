@@ -16,7 +16,7 @@ class _SohbetPageState extends State<SohbetPage> {
     final _userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sohbet"),
+        title: Text("Sohbet1"),
       ),
       body: FutureBuilder<List<Sohbet>>(
         future: _userModel.getAllSohbetler(_userModel.kullanici.userID),
@@ -58,12 +58,19 @@ class _SohbetPageState extends State<SohbetPage> {
                         );
                       },
                       child: ListTile(
-                        title: Text(oankiKonusma.son_yollanan_mesaj),
-                        //subtitle: Text(oankiKonusma.konusulanUserName + ("  ") + oankiKonusma.aradakiFark),
-                        subtitle: Text(oankiKonusma.konusulanUserName),
+                        title: Text(oankiKonusma.konusulanUserName),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(oankiKonusma.son_yollanan_mesaj),
+                            Text(oankiKonusma.aradakiFark),
+                          ],
+                        ),
                         leading: CircleAvatar(
                           backgroundColor: Colors.grey.withAlpha(40),
-                          //backgroundImage: NetworkImage(oankiKonusma.konusulanUserProfilURL),
+                          backgroundImage: oankiKonusma.konusulanUserProfilURL != null
+                              ? NetworkImage(oankiKonusma.konusulanUserProfilURL)
+                              : AssetImage("assets/images/profil.jpeg"),
                         ),
                       ),
                     );

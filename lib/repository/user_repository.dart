@@ -7,6 +7,7 @@ import 'package:chat_app/models/sohbet.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
 import 'package:chat_app/services/firebase_storage_service.dart';
 import 'package:chat_app/services/firestore_db_service.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class UserRepository {
   FirebaseAuthService _firebaseAuthService = locator<FirebaseAuthService>();
@@ -103,6 +104,7 @@ class UserRepository {
   }
 
   Future<List<Sohbet>> getAllSohbetler(String userID) async {
+    DateTime _zaman = await _firebaseDbService.saatiGoster(userID);
     var sohbetListesi = await _firebaseDbService.getAllSohbetler(userID);
 
     for (var oankiKonusma in sohbetListesi) {
@@ -120,7 +122,7 @@ class UserRepository {
         oankiKonusma.konusulanUserProfilURL = _veritabanindanOkunanUser.profilURL;
       }
 
-      //timeagoHesapla(oankiKonusma, _zaman);
+      timeagoHesapla(oankiKonusma, _zaman);
     }
 
     return sohbetListesi;
@@ -134,5 +136,12 @@ class UserRepository {
     }
 
     return null;
+  }
+
+  void timeagoHesapla(Sohbet oankiKonusma, DateTime _zaman) {
+    oankiKonusma.sonOkunmaZamani = _zaman;
+    timeago.setLocaleMessages("tr", timeago.TrMessages());
+    oankiKonusma.aradakiFark = timeago
+        .format(_zaman.subtract(_zaman.difference(oankiKonusma.olusturulma_tarihi.toDate())), locale: "tr");
   }
 }
