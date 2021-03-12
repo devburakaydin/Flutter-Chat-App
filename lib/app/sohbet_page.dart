@@ -1,6 +1,7 @@
 import 'package:chat_app/app/konusma_page.dart';
 import 'package:chat_app/models/kullanici.dart';
 import 'package:chat_app/models/sohbet.dart';
+import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,14 +37,19 @@ class _SohbetPageState extends State<SohbetPage> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(
-                            builder: (context) => KonusmaPage(
-                              currentUser: _userModel.kullanici,
-                              sohbetEdilenUser: Kullanici.idveResim(
-                                  userID: oankiKonusma.kimle_konusuyor,
-                                  profilURL: oankiKonusma.konusulanUserProfilURL),
+                            builder: (context) => ChangeNotifierProvider(
+                              create: (BuildContext context) => ChatViewModel(
+                                currentUser: _userModel.kullanici,
+                                sohbetEdilenUser: Kullanici.idveResim(
+                                    userID: oankiKonusma.kimleKonusuyor, profilURL: oankiKonusma.konusulanUserProfilURL),
+                              ),
+                              child: KonusmaPage(),
                             ),
                           ),
                           /*
+
+
+
                           MaterialPageRoute(
                             builder: (context) => ChangeNotifierProvider(
                               builder: (context) => ChatViewModel(
@@ -51,7 +57,7 @@ class _SohbetPageState extends State<SohbetPage> {
                                   sohbetEdilenUser: User.idveResim(
                                       userID: oankiKonusma.kimle_konusuyor,
                                       profilURL: oankiKonusma.konusulanUserProfilURL)),
-                              child: SohbetPage(),
+                              child: KonusmaPage(),
                             ),
                           ),
                            */
@@ -62,7 +68,7 @@ class _SohbetPageState extends State<SohbetPage> {
                         subtitle: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(oankiKonusma.son_yollanan_mesaj),
+                            Text(oankiKonusma.sonYollananMesaj),
                             Text(oankiKonusma.aradakiFark),
                           ],
                         ),

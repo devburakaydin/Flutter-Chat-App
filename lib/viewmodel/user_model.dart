@@ -49,6 +49,7 @@ class UserModel with ChangeNotifier {
       return sonuc;
     } catch (e) {
       debugPrint("signOut Hatası : " + e.toString());
+
       return false;
     } finally {
       state = ViewState.Idle;
@@ -70,11 +71,6 @@ class UserModel with ChangeNotifier {
       return true;
     }
     return false;
-  }
-
-  Future<List<Kullanici>> getAllUser() async {
-    var tumKullanicilar = await _userRepository.getAllUser();
-    return tumKullanicilar;
   }
 
   Future<Kullanici> signInWithGoogle() async {
@@ -110,11 +106,11 @@ class UserModel with ChangeNotifier {
     return _userRepository.getMessages(currentUserID, konusulanUserID);
   }
 
-  Future<bool> saveMessage(Mesaj kaydedilecekMesaj) async {
-    return await _userRepository.saveMessage(kaydedilecekMesaj);
-  }
-
   Future<List<Sohbet>> getAllSohbetler(String userID) async {
     return await _userRepository.getAllSohbetler(userID);
+  }
+
+  Future<List<Kullanici>> getUserWithSayfalama(Kullanici enSonGelenUser, int getirilecekUserSayisi) async {
+    return await _userRepository.getUserWithSayfalama(enSonGelenUser, getirilecekUserSayisi);
   }
 }

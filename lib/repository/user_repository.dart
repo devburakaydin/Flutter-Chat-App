@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:chat_app/locator.dart';
 import 'package:chat_app/models/kullanici.dart';
 import 'package:chat_app/models/mesaj.dart';
 import 'package:chat_app/models/sohbet.dart';
+import 'package:chat_app/services/bildirim_g%C3%B6nderme_servis.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
 import 'package:chat_app/services/firebase_storage_service.dart';
 import 'package:chat_app/services/firestore_db_service.dart';
@@ -13,7 +13,9 @@ class UserRepository {
   FirebaseAuthService _firebaseAuthService = locator<FirebaseAuthService>();
   FirebaseDbService _firebaseDbService = locator<FirebaseDbService>();
   FirebaseStorageService _firebaseStorageService = locator<FirebaseStorageService>();
+  BildirimGondermeServis _bildirimGondermeServis = locator<BildirimGondermeServis>();
   List<Kullanici> tumKullanicilar = [];
+  Map<String, String> kullaniciToken = Map<String, String>();
 
   Future<Kullanici> currentUser() async {
     Kullanici _kullanici = await _firebaseAuthService.currentUser();
@@ -90,17 +92,28 @@ class UserRepository {
     }
   }
 
-  Future<List<Kullanici>> getAllUser() async {
-    tumKullanicilar = await _firebaseDbService.getAllUser();
-    return tumKullanicilar;
-  }
-
   Stream<List<Mesaj>> getMessages(String currentUserID, String konusulanUserID) {
     return _firebaseDbService.getMessages(currentUserID, konusulanUserID);
   }
 
-  Future<bool> saveMessage(Mesaj kaydedilecekMesaj) async {
-    return await _firebaseDbService.saveMessage(kaydedilecekMesaj);
+  Future<bool> saveMessage(Mesaj kaydedilecekMesaj, Kullanici currentUser) async {
+    var dbYazmaSonuc = await _firebaseDbService.saveMessage(kaydedilecekMesaj);
+
+    if (dbYazmaSonuc) {
+      var token = "";
+      if (kullaniciToken.containsKey(kaydedilecekMesaj.kime)) {
+        token = kullaniciToken[kaydedilecekMesaj.kime];
+      } else {
+        token = await _firebaseDbService.tokenGetir(kaydedilecekMesaj.kime);
+        if (token != null) kullaniciToken[kaydedilecekMesaj.kime] = token;
+      }
+
+      if (token != null) await _bildirimGondermeServis.bildirimGonder(kaydedilecekMesaj, currentUser, token);
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<List<Sohbet>> getAllSohbetler(String userID) async {
@@ -108,7 +121,7 @@ class UserRepository {
     var sohbetListesi = await _firebaseDbService.getAllSohbetler(userID);
 
     for (var oankiKonusma in sohbetListesi) {
-      var userListesindekiKullanici = listedeUserBul(oankiKonusma.kimle_konusuyor);
+      var userListesindekiKullanici = listedeUserBul(oankiKonusma.kimleKonusuyor);
 
       if (userListesindekiKullanici != null) {
         //print("VERILER LOCAL CACHEDEN OKUNDU");
@@ -117,7 +130,7 @@ class UserRepository {
       } else {
         //print("VERILER VERITABANINDAN OKUNDU");
 
-        var _veritabanindanOkunanUser = await _firebaseDbService.readUser(oankiKonusma.kimle_konusuyor);
+        var _veritabanindanOkunanUser = await _firebaseDbService.readUser(oankiKonusma.kimleKonusuyor);
         oankiKonusma.konusulanUserName = _veritabanindanOkunanUser.userName;
         oankiKonusma.konusulanUserProfilURL = _veritabanindanOkunanUser.profilURL;
       }
@@ -141,7 +154,18 @@ class UserRepository {
   void timeagoHesapla(Sohbet oankiKonusma, DateTime _zaman) {
     oankiKonusma.sonOkunmaZamani = _zaman;
     timeago.setLocaleMessages("tr", timeago.TrMessages());
-    oankiKonusma.aradakiFark = timeago
-        .format(_zaman.subtract(_zaman.difference(oankiKonusma.olusturulma_tarihi.toDate())), locale: "tr");
+    oankiKonusma.aradakiFark = timeago.format(_zaman.subtract(_zaman.difference(oankiKonusma.olusturulmaTarihi.toDate())), locale: "tr");
+  }
+
+  Future<List<Kullanici>> getUserWithSayfalama(Kullanici enSonGelenUser, int getirilecekUserSayisi) async {
+    List<Kullanici> _userList = await _firebaseDbService.getUserWithSayfalama(enSonGelenUser, getirilecekUserSayisi);
+    tumKullanicilar.addAll(_userList);
+    return _userList;
+  }
+
+  Future<List<Mesaj>> getMessageWithPagination(
+      String currentUserID, String sohbetEdilenUserID, Mesaj _enSonGetirilenMesaj, int sayfaBasinaGonderiSayisi) async {
+    return await _firebaseDbService.getMessageWithPagination(
+        currentUserID, sohbetEdilenUserID, _enSonGetirilenMesaj, sayfaBasinaGonderiSayisi);
   }
 }

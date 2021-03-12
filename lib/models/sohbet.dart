@@ -1,46 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Sohbet {
-  final String konusma_sahibi;
-  final String kimle_konusuyor;
+  final String konusmaSahibi;
+  final String kimleKonusuyor;
   final bool goruldu;
-  final Timestamp olusturulma_tarihi;
-  final String son_yollanan_mesaj;
-  final Timestamp gorulme_tarihi;
+  final Timestamp olusturulmaTarihi;
+  final String sonYollananMesaj;
+  final Timestamp gorulmeTarihi;
   String konusulanUserName;
   String konusulanUserProfilURL;
   DateTime sonOkunmaZamani;
   String aradakiFark;
 
-  Sohbet(
-      {this.konusma_sahibi,
-      this.kimle_konusuyor,
-      this.goruldu,
-      this.olusturulma_tarihi,
-      this.son_yollanan_mesaj,
-      this.gorulme_tarihi});
+  Sohbet({this.konusmaSahibi, this.kimleKonusuyor, this.goruldu, this.olusturulmaTarihi, this.sonYollananMesaj, this.gorulmeTarihi});
 
   Map<String, dynamic> toMap() {
     return {
-      'konusma_sahibi': konusma_sahibi,
-      'kimle_konusuyor': kimle_konusuyor,
+      'konusmaSahibi': konusmaSahibi,
+      'kimleKonusuyor': kimleKonusuyor,
       'goruldu': goruldu,
-      'olusturulma_tarihi': olusturulma_tarihi ?? FieldValue.serverTimestamp(),
-      'son_yollanan_mesaj': son_yollanan_mesaj ?? FieldValue.serverTimestamp(),
-      'gorulme_tarihi': gorulme_tarihi,
+      'olusturulmaTarihi': olusturulmaTarihi ?? FieldValue.serverTimestamp(),
+      'sonYollananMesaj': sonYollananMesaj ?? FieldValue.serverTimestamp(),
+      'gorulmeTarihi': gorulmeTarihi,
     };
   }
 
   Sohbet.fromMap(Map<String, dynamic> map)
-      : konusma_sahibi = map['konusma_sahibi'],
-        kimle_konusuyor = map['kimle_konusuyor'],
+      : konusmaSahibi = map['konusmaSahibi'],
+        kimleKonusuyor = map['kimleKonusuyor'],
         goruldu = map['goruldu'],
-        olusturulma_tarihi = map['olusturulma_tarihi'],
-        son_yollanan_mesaj = map['son_yollanan_mesaj'],
-        gorulme_tarihi = map['gorulme_tarihi'];
+        olusturulmaTarihi = map['olusturulmaTarihi'],
+        sonYollananMesaj = map['sonYollananMesaj'],
+        gorulmeTarihi = map['gorulmeTarihi'];
 
   @override
   String toString() {
-    return 'Konusma{konusma_sahibi: $konusma_sahibi, kimle_konusuyor: $kimle_konusuyor, goruldu: $goruldu, olusturulma_tarihi: $olusturulma_tarihi, son_yollanan_mesaj: $son_yollanan_mesaj, gorulme_tarihi: $gorulme_tarihi}';
+    return 'Sohbet{konusmaSahibi: $konusmaSahibi, kimleKonusuyor: $kimleKonusuyor, goruldu: $goruldu, olusturulmaTarihi: $olusturulmaTarihi, sonYollananMesaj: $sonYollananMesaj, gorulmeTarihi: $gorulmeTarihi, konusulanUserName: $konusulanUserName, konusulanUserProfilURL: $konusulanUserProfilURL, sonOkunmaZamani: $sonOkunmaZamani, aradakiFark: $aradakiFark}';
   }
 }

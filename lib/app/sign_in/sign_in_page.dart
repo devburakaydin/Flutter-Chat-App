@@ -111,6 +111,7 @@ class _SignInPageState extends State<SignInPage> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
+                                initialValue: "123456",
                                 onSaved: (String girilenSifre) {
                                   _password = girilenSifre;
                                 },
