@@ -11,7 +11,6 @@ abstract class DbBase {
   Future<bool> userNameSearch(String userName);
   Future<bool> userNameUpdate(String userName, String userID);
   Future<bool> profilUrlUpload(String userID, String url);
-
   Future<List<Kullanici>> getUserWithSayfalama(Kullanici enSonGelenUser, int gelecekElemanSayisi);
   Future<List<Sohbet>> getAllSohbetler(String userID);
   Stream<List<Mesaj>> getMessages(String currentUserID, String konusulanUserID);

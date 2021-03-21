@@ -9,7 +9,7 @@ class AllUserViewModel with ChangeNotifier {
   AllUserViewState _state = AllUserViewState.Idle;
   List<Kullanici> _tumKullanicilar;
   Kullanici _enSonGetirilenUser;
-  static final sayfaBasinaGonderiSayisi = 5;
+  static final sayfaBasinaGonderiSayisi = 15;
   bool _hasMore = true;
 
   bool get hasMoreLoading => _hasMore;

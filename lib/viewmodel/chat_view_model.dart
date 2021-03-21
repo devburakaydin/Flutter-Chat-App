@@ -11,7 +11,7 @@ enum ChatViewState { Idle, Loaded, Busy }
 class ChatViewModel with ChangeNotifier {
   List<Mesaj> _tumMesajlar;
   ChatViewState _state = ChatViewState.Idle;
-  static final sayfaBasinaGonderiSayisi = 15;
+  static final sayfaBasinaGonderiSayisi = 30;
   UserRepository _userRepository = locator<UserRepository>();
   final Kullanici currentUser;
   final Kullanici sohbetEdilenUser;

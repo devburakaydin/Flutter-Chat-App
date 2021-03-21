@@ -4,7 +4,10 @@ import 'package:http/http.dart' as http;
 
 class BildirimGondermeServis {
   Future<bool> bildirimGonder(Mesaj gonderilecekBildirim, Kullanici gonderenUser, String token) async {
-    String endURL = "https://fcm.googleapis.com/fcm/send";
+    //var endURL = 'https://fcm.googleapis.com/fcm/send';
+    var endURL = Uri.parse('https://fcm.googleapis.com/fcm/send');
+
+    Uri.https('fcm.googleapis.com', '/fcm/send');
     String firebaseKey =
         "AAAAeSqnvMM:APA91bEAbTzRqE9ViwbnqswdO9dp6ZszLgzk2CyLLVzbLNUCqoTyvrgDFC4CFATI_7hMNdd08FOPDbFO-8VlzE2KYQuDl_iCHrPSie02zFwWVwqvJm_5mb5zyFUY9J-Tze_zEnx57-hg";
     Map<String, String> headers = {"Content-type": "application/json", "Authorization": "key=$firebaseKey"};

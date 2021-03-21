@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider(
       create: (context) => UserModel(),
       child: MaterialApp(
-        title: 'Chat App',
+        title: 'LimonChat',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.yellow,

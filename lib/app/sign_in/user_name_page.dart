@@ -64,8 +64,7 @@ class _UserNamePageState extends State<UserNamePage> {
                           children: [
                             Text(
                               "Bir Kullanıcı Adı Seciniz",
-                              style: GoogleFonts.fanwoodText(
-                                  fontWeight: FontWeight.bold, fontSize: 25, color: Colors.yellow.shade600),
+                              style: GoogleFonts.fanwoodText(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.yellow.shade600),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -93,18 +92,14 @@ class _UserNamePageState extends State<UserNamePage> {
                                         : null,
                                     errorText: _errorText,
                                     hintText: 'Email',
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: _renk)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: _renk)),
+                                    enabledBorder:
+                                        OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: _renk)),
+                                    focusedBorder:
+                                        OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: _renk)),
                                     errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red)),
                                     focusedErrorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red))),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red))),
                               ),
                             ),
                             Padding(
@@ -112,17 +107,19 @@ class _UserNamePageState extends State<UserNamePage> {
                               child: Container(
                                 height: 50,
                                 width: 400,
-                                child: FlatButton(
-                                    color: Colors.yellow,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-                                    onPressed: () {
-                                      kaydol();
-                                    },
-                                    child: Text(
-                                      "Kaydol",
-                                      //_buttonText,
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    )),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.yellow,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0))),
+                                  onPressed: () {
+                                    kaydol();
+                                  },
+                                  child: Text(
+                                    "Kaydol",
+                                    //_buttonText,
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                  ),
+                                ),
                               ),
                             ),
                           ],

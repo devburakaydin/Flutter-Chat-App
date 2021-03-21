@@ -17,7 +17,15 @@ class _SohbetPageState extends State<SohbetPage> {
     final _userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sohbet1"),
+        title: Text("Sohbet"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              _sohbetlerimListesiYenile();
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<Sohbet>>(
         future: _userModel.getAllSohbetler(_userModel.kullanici.userID),
@@ -41,36 +49,27 @@ class _SohbetPageState extends State<SohbetPage> {
                               create: (BuildContext context) => ChatViewModel(
                                 currentUser: _userModel.kullanici,
                                 sohbetEdilenUser: Kullanici.idveResim(
-                                    userID: oankiKonusma.kimleKonusuyor, profilURL: oankiKonusma.konusulanUserProfilURL),
+                                    userID: oankiKonusma.kimleKonusuyor,
+                                    profilURL: oankiKonusma.konusulanUserProfilURL,
+                                    name: oankiKonusma.name,
+                                    userName: oankiKonusma.konusulanUserName),
                               ),
                               child: KonusmaPage(),
                             ),
                           ),
-                          /*
-
-
-
-                          MaterialPageRoute(
-                            builder: (context) => ChangeNotifierProvider(
-                              builder: (context) => ChatViewModel(
-                                  currentUser: _userModel.user,
-                                  sohbetEdilenUser: User.idveResim(
-                                      userID: oankiKonusma.kimle_konusuyor,
-                                      profilURL: oankiKonusma.konusulanUserProfilURL)),
-                              child: KonusmaPage(),
-                            ),
-                          ),
-                           */
                         );
                       },
                       child: ListTile(
-                        title: Text(oankiKonusma.konusulanUserName),
-                        subtitle: Row(
+                        title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(oankiKonusma.sonYollananMesaj),
+                            Text(oankiKonusma.konusulanUserName),
                             Text(oankiKonusma.aradakiFark),
                           ],
+                        ),
+                        subtitle: Text(
+                          oankiKonusma.sonYollananMesaj,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         leading: CircleAvatar(
                           backgroundColor: Colors.grey.withAlpha(40),
@@ -128,3 +127,28 @@ class _SohbetPageState extends State<SohbetPage> {
     return null;
   }
 }
+/*
+StreamBuilder<List<Sohbet>>(
+        stream: _userModel.getStreamAllSohbetler(_userModel.kullanici.userID),
+        builder: (context, streamSohbetlerim) {
+          if (streamSohbetlerim.hasData) {
+            var tumSohbetListesi = streamSohbetlerim.data;
+            return ListView.builder(
+                itemCount: tumSohbetListesi.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 50,
+                    width: 50,
+                    color: Colors.yellow,
+                    child: Center(child: Text(index.toString())),
+                  );
+                });
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      )
+ */
+/*
+
+ */

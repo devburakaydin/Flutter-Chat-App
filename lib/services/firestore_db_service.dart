@@ -68,7 +68,7 @@ class FirebaseDbService implements DbBase {
   Future<bool> profilUrlUpload(String userID, String url) async {
     await _firestore.collection("users").doc(userID).update({"profilURL": url});
     DocumentSnapshot snapshot = await _firestore.collection("users").doc(userID).get();
-    if (Kullanici.fromMap(snapshot.data()).profilURL != url) {
+    if (Kullanici.fromMap(snapshot.data()).profilURL == url) {
       return true;
     } else {
       return false;
@@ -208,5 +208,33 @@ class FirebaseDbService implements DbBase {
       return _token.data()["token"];
     else
       return null;
+  }
+
+  Future<bool> userUpdate(String veribaslik, String userID, String veri) async {
+    await _firestore.collection("users").doc(userID).update({veribaslik: veri});
+    DocumentSnapshot snapshot = await _firestore.collection("users").doc(userID).get();
+    Kullanici kullanici = Kullanici.fromMap(snapshot.data());
+
+    if (veribaslik == "name") {
+      if (kullanici.name == veri) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (veribaslik == "userName") {
+      if (kullanici.userName == veri) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (veribaslik == "durum") {
+      if (kullanici.durum == veri) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

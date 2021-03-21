@@ -1,10 +1,9 @@
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:chat_app/viewmodel/user_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_button/sign_button.dart';
 
 enum FormType { Register, Login }
 enum FormDurum { Dolu, Bos }
@@ -18,6 +17,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password, _buttonText, _linkText, _titleText, _errorTextEmail, _errorTextSifre;
   var _formType = FormType.Login;
+
   var _formDurum = FormDurum.Bos;
 
   @override
@@ -74,8 +74,7 @@ class _SignInPageState extends State<SignInPage> {
                           children: [
                             Text(
                               _titleText,
-                              style: GoogleFonts.fanwoodText(
-                                  fontWeight: FontWeight.bold, fontSize: 50, color: Colors.yellow.shade600),
+                              style: GoogleFonts.fanwoodText(fontWeight: FontWeight.bold, fontSize: 50, color: Colors.yellow.shade600),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -95,23 +94,18 @@ class _SignInPageState extends State<SignInPage> {
                                     ),
                                     hintText: 'Email',
                                     enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.yellow)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.yellow)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.yellow)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.yellow)),
                                     errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red)),
                                     focusedErrorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red))),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red))),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                initialValue: "123456",
                                 onSaved: (String girilenSifre) {
                                   _password = girilenSifre;
                                 },
@@ -127,17 +121,13 @@ class _SignInPageState extends State<SignInPage> {
                                     ),
                                     hintText: 'Şifre',
                                     enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.yellow)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.yellow)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.yellow)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.yellow)),
                                     errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red)),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red)),
                                     focusedErrorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        borderSide: BorderSide(color: Colors.red))),
+                                        borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.red))),
                               ),
                             ),
                             _formDurum == FormDurum.Dolu
@@ -150,16 +140,18 @@ class _SignInPageState extends State<SignInPage> {
                               child: Container(
                                 height: 50,
                                 width: 400,
-                                child: FlatButton(
-                                    color: Colors.yellow,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-                                    onPressed: () {
-                                      buttonaBasildi();
-                                    },
-                                    child: Text(
-                                      _buttonText,
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    )),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.yellow,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0))),
+                                  onPressed: () {
+                                    buttonaBasildi();
+                                  },
+                                  child: Text(
+                                    _buttonText,
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                  ),
+                                ),
                               ),
                             ),
                             Padding(
@@ -173,9 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                                     InkWell(
                                       onTap: () {
                                         setState(() {
-                                          _formType == FormType.Login
-                                              ? _formType = FormType.Register
-                                              : _formType = FormType.Login;
+                                          _formType == FormType.Login ? _formType = FormType.Register : _formType = FormType.Login;
                                           _formKey.currentState.reset();
                                           _errorTextEmail = null;
                                           _errorTextSifre = null;
@@ -197,12 +187,13 @@ class _SignInPageState extends State<SignInPage> {
                     flex: 1,
                     child: Container(
                       alignment: Alignment.center,
-                      child: SignInButton.mini(
-                        buttonType: ButtonType.google,
-                        buttonSize: ButtonSize.large,
+                      child: GoogleAuthButton(
                         onPressed: () async {
                           await _userModel.signInWithGoogle();
                         },
+                        darkMode: false,
+                        borderRadius: 100,
+                        style: AuthButtonStyle.icon,
                       ),
                     ),
                   ),
@@ -218,8 +209,7 @@ class _SignInPageState extends State<SignInPage> {
   String emailValidatorKontrol(String value) {
     if (value.isEmpty) {
       return 'Email Boş Olamaz';
-    } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value)) {
+    } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
       return 'Email Dogru Degil';
     }
     return null;
@@ -242,14 +232,12 @@ class _SignInPageState extends State<SignInPage> {
 
   void hata(String e) {
     setState(() {
-      if (e ==
-          "[firebase_auth/wrong-password] The password is invalid or the user does not have a password.") {
+      if (e == "[firebase_auth/wrong-password] The password is invalid or the user does not have a password.") {
         _errorTextSifre = "Şifre Geçerli Degil";
       } else if (e ==
           "[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.") {
         _errorTextEmail = "Email Geçerli Degil";
-      } else if (e ==
-          "[firebase_auth/emaıl-already-ın-use] The email address is already in use by another account.") {
+      } else if (e == "[firebase_auth/emaıl-already-ın-use] The email address is already in use by another account.") {
         _errorTextEmail = "Email Kullanımda";
       } else {
         _errorTextEmail = "Tekrar Deneyin";

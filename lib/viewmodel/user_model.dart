@@ -43,8 +43,8 @@ class UserModel with ChangeNotifier {
   Future<bool> signOut() async {
     try {
       state = ViewState.Busy;
-      bool sonuc = await _userRepository.signOut();
       _kullanici = null;
+      bool sonuc = await _userRepository.signOut();
 
       return sonuc;
     } catch (e) {
@@ -64,6 +64,19 @@ class UserModel with ChangeNotifier {
     return await _userRepository.userNameSearch(userName);
   }
 
+  Future<bool> userUpdate(String veribaslik, String userID, String veri) async {
+    bool sonuc = await _userRepository.userUpdate(veribaslik, userID, veri);
+    if (sonuc) {
+      if (veribaslik == "userName")
+        _kullanici.userName = veri;
+      else if (veribaslik == "name")
+        _kullanici.name = veri;
+      else if (veribaslik == "durum") _kullanici.durum = veri;
+      notifyListeners();
+    }
+    return sonuc;
+  }
+
   Future<bool> userNameUpdate(String userName, String userID) async {
     bool sonuc = await _userRepository.userNameUpdate(userName, userID);
     if (sonuc) {
@@ -74,11 +87,17 @@ class UserModel with ChangeNotifier {
   }
 
   Future<Kullanici> signInWithGoogle() async {
-    _kullanici = await _userRepository.signInWithGoogle();
-    if (_kullanici != null) {
+    try {
+      state = ViewState.Busy;
+
+      _kullanici = await _userRepository.signInWithGoogle();
+      return _kullanici;
+    } catch (e) {
+      print("hata : " + e.toString());
+      return null;
+    } finally {
       state = ViewState.Idle;
     }
-    return _kullanici;
   }
 
   Future<Kullanici> signInWithEmailAndPassword(String email, String sifre) async {
@@ -86,7 +105,6 @@ class UserModel with ChangeNotifier {
     if (_kullanici != null) {
       state = ViewState.Idle;
     }
-
     return _kullanici;
   }
 
@@ -99,7 +117,12 @@ class UserModel with ChangeNotifier {
   }
 
   Future<String> uploadFile(String userID, String fileType, File yuklenecekDosya) async {
-    return await _userRepository.uploadFile(userID, fileType, yuklenecekDosya);
+    String url = await _userRepository.uploadFile(userID, fileType, yuklenecekDosya);
+    if (url != null) {
+      _kullanici.profilURL = url;
+    }
+
+    return url;
   }
 
   Stream<List<Mesaj>> getMessages(String currentUserID, String konusulanUserID) {

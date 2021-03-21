@@ -16,13 +16,13 @@ class FirebaseAuthService {
 
   Future<bool> signOut() async {
     await _firebaseAuth.signOut();
+
     await GoogleSignIn().signOut();
     return true;
   }
 
   Future<Kullanici> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
@@ -30,6 +30,8 @@ class FirebaseAuthService {
       idToken: googleAuth.idToken,
     );
     UserCredential sonuc = await _firebaseAuth.signInWithCredential(credential);
+    print(sonuc.user.email);
+
     if (sonuc != null) {
       return Kullanici(userID: sonuc.user.uid, email: sonuc.user.email);
     } else {

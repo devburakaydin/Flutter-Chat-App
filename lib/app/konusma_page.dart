@@ -32,7 +32,18 @@ class _KonusmaPageState extends State<KonusmaPage> {
     final _chatModel = Provider.of<ChatViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sohbet"),
+        leading: IconButton(
+          iconSize: 30,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Row(
+            children: <Widget>[
+              Icon(Icons.arrow_back),
+            ],
+          ),
+        ),
+        title: Text(_chatModel.sohbetEdilenUser.name ?? _chatModel.sohbetEdilenUser.userName),
       ),
       body: _chatModel.state == ChatViewState.Busy
           ? Center(
@@ -112,16 +123,14 @@ class _KonusmaPageState extends State<KonusmaPage> {
                     konusmaSahibi: _chatModel.currentUser.userID,
                     mesaj: _mesajController.text,
                   );
-                  var sonuc = await _chatModel.saveMessage(_kaydedilecekMesaj);
-                  if (sonuc) {
-                    _mesajController.clear();
-                    _scrollController.animateTo(
-                      _scrollController.position.minScrollExtent,
-                      //curve: Curves.easeOut,
-                      curve: Curves.easeInOut,
-                      duration: const Duration(milliseconds: 10),
-                    );
-                  }
+                  _mesajController.clear();
+                  await _chatModel.saveMessage(_kaydedilecekMesaj);
+                  _scrollController.animateTo(
+                    _scrollController.position.minScrollExtent,
+                    //curve: Curves.easeOut,
+                    curve: Curves.easeInOut,
+                    duration: const Duration(milliseconds: 10),
+                  );
                 }
               },
             ),

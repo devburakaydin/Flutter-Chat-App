@@ -3,7 +3,6 @@ import 'package:chat_app/app/my_custom_bottom_navi.dart';
 import 'package:chat_app/app/profil_page.dart';
 import 'package:chat_app/app/sohbet_page.dart';
 import 'package:chat_app/app/tab_items.dart';
-import 'package:chat_app/notification_handler.dart';
 import 'package:chat_app/viewmodel/all_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +21,12 @@ class _HomePageState extends State<HomePage> {
     TabItem.Profil: GlobalKey<NavigatorState>(),
   };
 
+  @override
+  void initState() {
+    super.initState();
+    //NotificationHandler().initializeFCMNotification(context);
+  }
+
   Map<TabItem, Widget> tumSayfalar() {
     return {
       TabItem.Kullanicilar: ChangeNotifierProvider(
@@ -31,12 +36,6 @@ class _HomePageState extends State<HomePage> {
       TabItem.Sohbet: SohbetPage(),
       TabItem.Profil: ProfilPage(),
     };
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    NotificationHandler().initializeFCMNotification(context);
   }
 
   @override

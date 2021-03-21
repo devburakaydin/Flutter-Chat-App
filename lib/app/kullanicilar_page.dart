@@ -86,13 +86,15 @@ class _KullanicilarPageState extends State<KullanicilarPage> {
           );
         },
         child: Container(
-          height: 200,
           child: ListTile(
-            title: Text(secilenUser.userName),
-            subtitle: Text(secilenUser.email),
-            leading: secilenUser.profilURL == null
-                ? CircleAvatar(backgroundImage: AssetImage("assets/images/profil.jpeg"))
-                : CircleAvatar(backgroundImage: NetworkImage(secilenUser.profilURL)),
+            title: Text(secilenUser.name ?? secilenUser.userName),
+            subtitle: secilenUser.durum == null
+                ? Text("")
+                : Text(
+                    secilenUser.durum,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            leading: CircleAvatar(backgroundImage: NetworkImage(secilenUser.profilURL)),
           ),
         ),
       );

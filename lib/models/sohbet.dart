@@ -7,6 +7,7 @@ class Sohbet {
   final Timestamp olusturulmaTarihi;
   final String sonYollananMesaj;
   final Timestamp gorulmeTarihi;
+  String name;
   String konusulanUserName;
   String konusulanUserProfilURL;
   DateTime sonOkunmaZamani;
