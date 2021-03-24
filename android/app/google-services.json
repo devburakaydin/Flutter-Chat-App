@@ -1,49 +1,49 @@
 {
   "project_info": {
-    "project_number": "520406678723",
-    "project_id": "limonchat-991f0",
-    "storage_bucket": "limonchat-991f0.appspot.com"
+    "project_number": "272320172978",
+    "project_id": "lchatapp",
+    "storage_bucket": "lchatapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:520406678723:android:364aef4fa4cd92f80b7676",
+        "mobilesdk_app_id": "1:272320172978:android:d888bfa6feb58109ba8aab",
         "android_client_info": {
-          "package_name": "com.example.chat_app"
+          "package_name": "com.burakaydin.chat_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "520406678723-pbjjnbnu08t5e19lbsmb0dv2jsut6qkm.apps.googleusercontent.com",
+          "client_id": "272320172978-9hcrbkfsaf7naoc8fdo1ijpq5fk5cjsr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.chat_app",
+            "package_name": "com.burakaydin.chat_app",
             "certificate_hash": "29f97764f9bcadeec908b7a12b1d7fc7da55b7d4"
           }
         },
         {
-          "client_id": "520406678723-t4mf0h0ppflo6ijdio83mcqkbkrdps6n.apps.googleusercontent.com",
+          "client_id": "272320172978-mhg6mjl1kk4ku0ie31sgciugstj9qkis.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.chat_app",
+            "package_name": "com.burakaydin.chat_app",
             "certificate_hash": "979f564ea7eedd859fae06924dc93a245e5ba574"
           }
         },
         {
-          "client_id": "520406678723-b40g7ar4qba95odhq757tqtbou4f3e8t.apps.googleusercontent.com",
+          "client_id": "272320172978-rug5rji5te0h5f7kt63k045dm7i0fqut.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCiwGg0kKPZOIA2iBnXD67JDUCMykSX9JU"
+          "current_key": "AIzaSyA-2fjONBg-f3VniwkmmmJYiAg6QYZjAvc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "520406678723-b40g7ar4qba95odhq757tqtbou4f3e8t.apps.googleusercontent.com",
+              "client_id": "272320172978-rug5rji5te0h5f7kt63k045dm7i0fqut.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
