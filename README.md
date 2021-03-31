@@ -1,6 +1,6 @@
 # Chat_App
 
-https://play.google.com/store/apps/details?id=com.burakaydin.chat_app
+- [Google Play Store LChatApp](https://play.google.com/store/apps/details?id=com.burakaydin.chat_app)
 
 A new Flutter application.
 
