@@ -7,7 +7,7 @@ Flutter Kullanarak hazırladıgım Projem:
 Flutter ile geliştirmekte oldugum ChatApp Projem.
 
 <p align="center">
-  <img height="700" align="center" src="https://user-images.githubusercontent.com/55949311/118159804-29ebac80-b426-11eb-9ae9-f8ad4f587e63.gif" alt="aydnburak"/>
+  <img height="550" align="center" src="https://user-images.githubusercontent.com/55949311/118159804-29ebac80-b426-11eb-9ae9-f8ad4f587e63.gif" alt="aydnburak"/>
 </p>
 
 ### dependencies:
